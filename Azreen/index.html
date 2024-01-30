@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pergerakkan Pegawai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 <style>
 /* Apply CSS styles to set the form size */
@@ -59,8 +60,11 @@
 			overflow-y: auto; /* Enable vertical scrollbar if content exceeds the height */
 		}
 	   
-	   
-		button {
+	 @media screen and (max-width: 600px) {
+/* Styles for small screens */
+	}
+	
+	button {
             width: 40%;
             box-sizing: border-box;
             display: inline-block;
@@ -74,7 +78,7 @@
             border-radius: 4px; /* Set border radius for button */
         }
 	
-		select {
+	select {
             font-size: 16px; /* Set the font size for the combobox */
             padding: 10px;
             border: 1px solid #ccc;
