@@ -268,25 +268,33 @@
 
 			console.log("Status Value:", statusValue);
 
-			// Get a reference to the database node where the status will be stored
-			var statusRef = firebase.database().ref("anonymous_users").push();
+    		// Get a reference to the database node where the status will be stored
+   		 var statusRef = firebase.database().ref("anonymous_users");
 
-			console.log("Database Reference:", statusRef.toString());
-
-			// Save the status in Firebase Realtime Database
-			statusRef.set({
-				status: statusValue
-			})
-			.then(function() {
-				console.log("Status updated successfully!");
-				// Display the custom modal
-				document.getElementById("customModal").style.display = "flex";
-				// Update the textbox value
-				document.getElementById("textbox1").value = statusValue;
-			})
-			.catch(function(error) {
-				console.error("Error updating status:", error);
-			});
+   		 // Fetch the last recorded status from Firebase
+    		statusRef.limitToLast(1).once('value')
+        	.then(function(snapshot) {
+            	// Get the key of the last recorded status
+           	 var lastStatusKey = Object.keys(snapshot.val())[0];
+            
+           	 // Update the existing status in Firebase
+           	 statusRef.child(lastStatusKey).update({
+               		 status: statusValue
+          	  })
+            	.then(function() {
+                	console.log("Status updated successfully!");
+                // Display the custom modal
+               		document.getElementById("customModal").style.display = "flex";
+                // Update the textbox value
+                	document.getElementById("textbox1").value = statusValue;
+            		})
+            	.catch(function(error) {
+                	console.error("Error updating status:", error);
+            		});
+        	})
+        	.catch(function(error) {
+            		console.error("Error retrieving last status:", error);
+        		});
 		}		
 		
 		
